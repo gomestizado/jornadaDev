@@ -1,34 +1,40 @@
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Video from "./pages/Video";
+import db from "./config/firebase";
+import { collection, getDocs } from "firebase/firestore/lite";
 
 function App() {
+  const [video, setVideos] = useState([]);
+
+  async function getVideos() {
+    const videosCollection = collection(db, "videos");
+    const videosSnapshot = await getDocs(videosCollection);
+    const videosList = videosSnapshot.docs.map((doc) => doc.data());
+    setVideos(videosList);
+  }
+
+  useEffect(() => {
+    getVideos();
+  }, []);
+
   return (
     <div className="App">
       <div className="app__videos">
-        <Video likes={111}
-        messages={222}
-        shares={333} 
-        name="Matheus Coelho" 
-        description="Gato goleiro do prof. @PauloSantos" 
-        music="epic music - epic artist"
-        url="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/brecker2.mp4"
-      />
-        <Video 
-        likes={444} 
-        messages={555} 
-        shares={666}name="Matheus Gomes" 
-        description="Gato no sofá" 
-        music="Áudio original"
-        url="https://privaty.com.br/wp-content/uploads/2023/03/gato-1.mp4"
-      />
-        <Video 
-        likes={777} 
-        messages={888} 
-        shares={999}name="Matheus" 
-        description="Sem video ainda :'(" 
-        music="another music - other artist"
-        url=""
-      />
+        {video.map((item, key) => {
+          return (
+            <Video
+              key={key}
+              likes={item.likes}
+              messages={item.messages}
+              shares={item.shares}
+              name={item.name}
+              description={item.description}
+              music={item.music}
+              url={item.url}
+            />
+          );
+        })}
       </div>
     </div>
   );
