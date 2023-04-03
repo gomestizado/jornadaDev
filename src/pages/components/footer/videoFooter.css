@@ -1,6 +1,6 @@
 .videoFooter {
   position: relative;
-  bottom: 20%;
+  bottom: 19%;
   color: white;
   margin-left: 30px;
 }
@@ -23,14 +23,14 @@
 }
 
 .videoFooterMusic__text p {
-  animation: moveTheText 4s infinite linear;
+  animation: moveTheText 5s infinite linear;
 }
 
 .videoFooter__record {
   animation: spinTheRecord 3s infinite linear;
   position: absolute;
-  bottom: 6px;
-  right: 15px;
+  bottom: 5px;
+  right: 24px;
   height: 50px;
   filter: invert(1);
 }
@@ -50,5 +50,14 @@
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+
+@media only screen and (max-width: 440px) {
+  .videoFooter {
+    bottom: 20%;
+  }
+  .videoFooterMusic__text {
+    width: 79%;
   }
 }
